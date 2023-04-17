@@ -26,17 +26,14 @@ def mintNFT(algod_client, creator_address, creator_private_key, asset_name, asse
         default_frozen=False,
         unit_name=asset_unit_name,
         asset_name=asset_name,
-        url="ipfs:://Qmcku6UU2sfHfXAW7raLWyD4y6HsbbtbyG1dogM2mh4tkY#arc3"
     )
 
     signed_txn = unsigned_txn.sign(creator_private_key)
 
     txid = algod_client.send_transaction(signed_txn)
-    print("Successfully submitted transaction with txID: {}".format(txid))
 
     txn_result = transaction.wait_for_confirmation(algod_client, txid, 4)
     created_asset = txn_result["asset-index"]
-    print(f"Asset ID Created is {created_asset}")
 
     return created_asset 
 
